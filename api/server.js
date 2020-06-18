@@ -6,7 +6,7 @@ const server = express();
 
 server.use(helmet());
 server.use(cors());
-server.use(experss.json());
+server.use(express.json());
 
 server.get('/', (req, res) => {
     res.send('Server Running');
