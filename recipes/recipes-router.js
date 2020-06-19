@@ -1,11 +1,11 @@
-// const express = require("express");
+const express = require("express");
 
-// const recipes = require("./recipes-model");
+const recipes = require("./recipes-model");
 
-// const router = express.Router();
+const router = express.Router();
 
-// router.get("/", (req, res) => {
-//     recipes.find().then((recipes) => {
-//         res.status(200);
-//     });
-// });
+router.get("/", (req, res) => {
+    recipes.find().then((recipes) => {
+        res.status(200);
+    });
+});
