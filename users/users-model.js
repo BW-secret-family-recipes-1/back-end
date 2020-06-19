@@ -7,7 +7,7 @@ function add(user) {
 
 function find() {
     return db('users')
-        .select('id', 'username');
+        .select('id', 'email');
 }
 
 function findBy(filter) {
