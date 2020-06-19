@@ -5,14 +5,17 @@ exports.up = function(knex) {
         users
             .increments();
         users
-            .string('username', 255)
+            .string('first_name', 128)
+            .notNullable();
+        users
+            .string('last_name', 128)
+            .notNullable();
+        users
+            .string('email', 128)
             .notNullable()
             .unique();
         users
             .string('password', 128)
-            .notNullable();
-        users
-            .string('email', 128)
             .notNullable();
     })
     .createTable('recipes', recipes => {
