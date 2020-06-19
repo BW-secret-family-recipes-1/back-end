@@ -63,7 +63,11 @@ Authentication
 Jwttoken is used for authentication
 
 Error Codes
-200,201,401,404,500
+200 Success,
+201 Success Resource Created,
+401 Unauthorized,
+404 Not Found,
+500 Internal Server Error
 /-----------------------------------------------------------------------------------------------/
 
 POST /api/auth/register
