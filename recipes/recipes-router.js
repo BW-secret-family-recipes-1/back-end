@@ -1,11 +1,32 @@
-const express = require("express");
+const router = require("express").Router();
 
 const recipes = require("./recipes-model");
 
-const router = express.Router();
-
 router.get("/", (req, res) => {
-    recipes.find().then((recipes) => {
-        res.status(200);
-    });
+    recipes
+        .findingredients()
+        .then((ingredients) => {
+            res.json(ingredients);
+        })
+        .catch((err) => {
+            res.status(500).json({ message: "Failed to get recipes", err });
+        });
+    recipes
+        .findingredients()
+        .then((ingredients) => {
+            res.json([ingredients.name]);
+        })
+        .catch((err) => {
+            res.status(500).json({ message: "Failed to get recipes", err });
+        });
+    recipes
+        .findinstructions()
+        .then((instructions) => {
+            res.json([instructions.name]);
+        })
+        .catch((err) => {
+            res.status(500).json({ message: "Failed to get recipes", err });
+        });
 });
+
+module.exports = router;
