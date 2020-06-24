@@ -23,7 +23,7 @@ function findById(id) {
 function findIngredients(id) {
     return db("ingredients as in")
         .join("recipes as r", "r.id", "=", "in.recipe_id")
-        .select("r.title", "in.name")
+        .select("in.name")
         .where({ recipe_id: id });
 }
 
@@ -74,7 +74,7 @@ module.exports = {
     addInstructions,
     // findinstructions,
     // findrecipes,
-    // findingredients,
+    findIngredients,
     // update,
     remove,
     removeIngredients,
