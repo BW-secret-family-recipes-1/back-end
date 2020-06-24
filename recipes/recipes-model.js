@@ -32,9 +32,10 @@ function findInstructions(id) {
         .where({ recipe_id: id });
 }
 
-// function add(recipeData) {
-//     return db("recipes").insert(recipeData);
-// }
+function add(recipe) {
+    return db("recipes")
+        .insert(recipe);
+}
 
 // function update(changes, id) {
 //     return db("recipes").where({ id }).update(changes);
@@ -47,11 +48,11 @@ function findInstructions(id) {
 module.exports = {
     find,
     findById,
-    findInstructions
+    findInstructions,
+    add,
     // findrecipes,
     // findingredients,
     // findinstructions,
-    // add,
     // update,
     // remove,
 };

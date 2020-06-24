@@ -44,4 +44,16 @@ router.get('/:id/instructions', (req, res) => {
         })
 })
 
+router.post('/', (req, res) => {
+    const recipeData = req.body;
+
+    recipes.add(recipeData)
+        .then(recipe => {
+            res.status(201).json(recipe)
+        })
+        .catch(error => {
+            res.status(500).json({ message: "Failed to create a new recipe"})
+        })
+})
+
 module.exports = router;
