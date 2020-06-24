@@ -3,45 +3,121 @@ const router = require("express").Router();
 const recipes = require("./recipes-model");
 
 router.get("/", (req, res) => {
-    recipes.find()
-        .then(recipe => {
-            res.status(200).json(recipe)
+    recipes
+        .find()
+        .then((recipe) => {
+            res.status(200).json(recipe);
         })
-        .catch(error => {
-            res.status(401).json({ message: "couldn't retrieve recipes" })
-        })
+        .catch((error) => {
+            res.status(401).json({ message: "couldn't retrieve recipes" });
+        });
 });
 
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
     const { id } = req.params;
 
-    recipes.findById(id)
-        .then(recipe => {
+    recipes
+        .findById(id)
+        .then((recipe) => {
             if (recipe) {
-                res.json(recipe)
+                res.json(recipe);
             } else {
-                res.status(404).json({ message: "Could not find the recipe" })
+                res.status(404).json({ message: "Could not find the recipe" });
             }
         })
-        .catch(error => {
-            res.status(500).json({ message: "Failed to get this recipe" })
-        })
-})
+        .catch((error) => {
+            res.status(500).json({ message: "Failed to get this recipe" });
+        });
+});
 
-router.get('/:id/instructions', (req, res) => {
+router.get("/:id/ingredients", (req, res) => {
     const { id } = req.params;
 
-    recipes.findInstructions(id)
-        .then(steps => {
-            if (steps.length) {
-                res.json(steps)
+    recipes
+        .findIngredients(id)
+        .then((ingredients) => {
+            if (ingredients.length) {
+                res.json(ingredients);
             } else {
-                res.status(404).json({ message: 'Could not find instructions for given recipe' })
+                res.status(404).json({
+                    message: "Could not find ingredients for given recipe",
+                });
             }
         })
-        .catch(error => {
-            res.status(500).json({ message: 'Failed to get instructions'})
+        .catch((error) => {
+            res.status(500).json({ message: "Failed to get ingredients" });
+        });
+});
+
+router.get("/:id/instructions", (req, res) => {
+    const { id } = req.params;
+
+    recipes
+        .findInstructions(id)
+        .then((steps) => {
+            if (steps.length) {
+                res.json(steps);
+            } else {
+                res.status(404).json({
+                    message: "Could not find instructions for given recipe",
+                });
+            }
         })
-})
+        .catch((error) => {
+            res.status(500).json({ message: "Failed to get instructions" });
+        });
+});
+
+router.delete("/:id", (req, res) => {
+    const { id } = req.params;
+
+    recipes
+        .remove(id)
+        .then((recipe) => {
+            if (recipe) {
+                res.json({ removed: recipe });
+            } else {
+                res.status(404).json({
+                    message: "Could not find recipe with given id",
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ message: "Failed to delete recipe" });
+        });
+});
+
+router.delete("/:id", (req, res) => {
+    recipes
+        .removeIngredients(id)
+        .then((recipe) => {
+            if (recipe) {
+                res.json({ removed: recipe });
+            } else {
+                res.status(404).json({
+                    message: "Could not find ingredients with given id",
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ message: "Failed to delete ingredients" });
+        });
+});
+router.delete("/:id", (req, res) => {
+    recipes
+        .removeInstructions(id)
+        .then((recipe) => {
+            if (recipe) {
+                res.json({ removed: recipe });
+            } else {
+                res.status(404).json({
+                    message: "Could not find instructions with given id",
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ message: "Failed to delete instructions" });
+        });
+});
 
 module.exports = router;
