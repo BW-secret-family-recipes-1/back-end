@@ -56,4 +56,24 @@ router.post('/', (req, res) => {
         })
 })
 
+router.post('/:id/instructions', (req, res) => {
+    const instructionsData = req.body;
+    const { id } = req.params;
+
+    recipes.findById(id)
+        .then(recipe => {
+            if (recipe) {
+                recipes.addInstructions(instructionsData, id)
+                    .then(instruction => {
+                        res.status(201).json(instruction)
+                    })
+            } else {
+                res.status(404).json({ message: "Could not find instruction" })
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ message: "Failed to create a new instruction" })
+        })
+})
+
 module.exports = router;
