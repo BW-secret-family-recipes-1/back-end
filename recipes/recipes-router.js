@@ -133,21 +133,12 @@ router.post("/", (req, res) => {
 });
 
 router.post("/:id/ingredients", (req, res) => {
-    const ingredientsData = req.body;
-    const { id } = req.params;
+    const ingredientData = req.body;
 
     recipes
-        .findById(id)
-        .then((recipe) => {
-            if (recipe) {
-                recipes
-                    .addInstructions(ingredientsData, id)
-                    .then((ingredients) => {
-                        res.status(201).json(ingredients);
-                    });
-            } else {
-                res.status(404).json({ message: "Could not find ingredients" });
-            }
+        .addIngredients(ingredientData)
+        .then((ingredient) => {
+            res.status(201).json(ingredient);
         })
         .catch((error) => {
             res.status(500).json({
@@ -158,21 +149,13 @@ router.post("/:id/ingredients", (req, res) => {
 
 router.post("/:id/instructions", (req, res) => {
     const instructionsData = req.body;
-    const { id } = req.params;
 
     recipes
-        .findById(id)
-        .then((recipe) => {
-            if (recipe) {
-                recipes
-                    .addInstructions(instructionsData, id)
-                    .then((instruction) => {
-                        res.status(201).json(instruction);
-                    });
-            } else {
-                res.status(404).json({ message: "Could not find instruction" });
-            }
+        .addInstructions(instructionsData)
+        .then((instruction) => {
+            res.status(201).json(instruction);
         })
+
         .catch((error) => {
             res.status(500).json({
                 message: "Failed to create a new instruction",

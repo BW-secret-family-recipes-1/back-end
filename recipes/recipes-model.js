@@ -25,30 +25,21 @@ function findIngredients(id) {
 
 function findInstructions(id) {
     return db("instructions as i")
-        .join("recipes as r", "r.id", "=", "i.id")
-        .select("i.id", "r.title", "i.step_number", "i.instructions")
+        .join("recipes as r", "r.id", "=", "i.recipe_id")
+        .select("r.title", "i.step_number", "i.instructions")
         .where({ recipe_id: id });
 }
 
 function add(recipe) {
     return db("recipes").insert(recipe);
 }
-function addInstructions(ingredients) {
-    return db("ingredients")
-        .insert(ingredients, "id")
-        .then((ids) => {
-            const [id] = ids;
-            return findById(id);
-        });
+
+function addIngredients(ingredients) {
+    return db("ingredients").insert(ingredients);
 }
 
 function addInstructions(instruction) {
-    return db("instructions")
-        .insert(instruction, "id")
-        .then((ids) => {
-            const [id] = ids;
-            return findById(id);
-        });
+    return db("instructions").insert(instruction);
 }
 
 function update(changes, id) {
@@ -81,9 +72,12 @@ module.exports = {
     findById,
     findInstructions,
     add,
+    addIngredients,
     addInstructions,
     findIngredients,
     update,
+    updateInstructions,
+    updateIngredients,
     remove,
     removeIngredients,
     removeInstructions,
