@@ -133,6 +133,30 @@ router.post("/", (req, res) => {
         });
 });
 
+router.post("/:id/ingredients", (req, res) => {
+    const ingredientsData = req.body;
+    const { id } = req.params;
+
+    recipes
+        .findById(id)
+        .then((recipe) => {
+            if (recipe) {
+                recipes
+                    .addInstructions(ingredientsData, id)
+                    .then((ingredients) => {
+                        res.status(201).json(ingredients);
+                    });
+            } else {
+                res.status(404).json({ message: "Could not find ingredients" });
+            }
+        })
+        .catch((error) => {
+            res.status(500).json({
+                message: "Failed to create a new ingredients",
+            });
+        });
+});
+
 router.post("/:id/instructions", (req, res) => {
     const instructionsData = req.body;
     const { id } = req.params;
@@ -157,40 +181,62 @@ router.post("/:id/instructions", (req, res) => {
         });
 });
 
-router.post("/", (req, res) => {
-    const recipeData = req.body;
+router.put("/:id", (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
 
     recipes
-        .add(recipeData)
-        .then((recipe) => {
-            res.status(201).json(recipe);
+        .update(changes, id)
+        .then((count) => {
+            if (count) {
+                res.json({ update: count });
+            } else {
+                res.status(404).json({
+                    message: "Could not find user with given id",
+                });
+            }
         })
-        .catch((error) => {
-            res.status(500).json({ message: "Failed to create a new recipe" });
+        .catch((err) => {
+            res.status(500).json({ message: "Failed to update recipe" });
+        });
+});
+router.put("/:id/ingredients", (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
+
+    recipes
+        .updateIngredients(changes, id)
+        .then((count) => {
+            if (count) {
+                res.json({ update: count });
+            } else {
+                res.status(404).json({
+                    message: "Could not find ingredients",
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({ message: "Failed to update recipe" });
         });
 });
 
-router.post("/:id/instructions", (req, res) => {
-    const instructionsData = req.body;
+router.put("/:id/instructions", (req, res) => {
     const { id } = req.params;
+    const changes = req.body;
 
     recipes
-        .findById(id)
-        .then((recipe) => {
-            if (recipe) {
-                recipes
-                    .addInstructions(instructionsData, id)
-                    .then((instruction) => {
-                        res.status(201).json(instruction);
-                    });
+        .updateInstructions(changes, id)
+        .then((count) => {
+            if (count) {
+                res.json({ update: count });
             } else {
-                res.status(404).json({ message: "Could not find instruction" });
+                res.status(404).json({
+                    message: "Could not find instructions",
+                });
             }
         })
-        .catch((error) => {
-            res.status(500).json({
-                message: "Failed to create a new instruction",
-            });
+        .catch((err) => {
+            res.status(500).json({ message: "Failed to update recipe" });
         });
 });
 
