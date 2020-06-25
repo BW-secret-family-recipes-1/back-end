@@ -4,6 +4,12 @@ function find() {
     return db("recipes").select("id", "title", "source", "category");
 }
 
+function findUserById(id) {
+    return db("users")
+        .where({ id })
+        .select("id", "email");
+}
+
 function findById(id) {
     return db("recipes")
         .where({ id })
@@ -71,6 +77,7 @@ function removeInstructions(id) {
 
 module.exports = {
     find,
+    findUserById,
     findById,
     findInstructions,
     add,
