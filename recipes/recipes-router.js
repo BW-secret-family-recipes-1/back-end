@@ -3,14 +3,13 @@ const router = require("express").Router();
 const recipes = require("./recipes-model");
 
 router.get("/", (req, res) => {
-    recipes
-        .find()
+    recipes.find()
         .then((recipe) => {
             res.status(200).json(recipe);
         })
         .catch((error) => {
             res.status(401).json({ message: "couldn't retrieve recipes" });
-        });
+        })
 });
 
 router.get("/:id", (req, res) => {
