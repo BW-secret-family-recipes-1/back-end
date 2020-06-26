@@ -114,8 +114,9 @@ password:"password"
 returns a 200 SUCCESS Status and the user object:
 
 {
+"message": "Welcome to our API"
 "token":"super-secret-token",
-"user":"bobjones@gmail.com"
+
 }
 
 /-----------------------------------------------------------------------------------------------/
@@ -123,33 +124,120 @@ returns a 200 SUCCESS Status and the user object:
 GET /api/recipes
 
 Get all recipes for user
+{
+"recipe_id": 2,
+"step_number": "2",
+"instructions": "Place on oven sheet funny funny"
+}
+/-----------------------------------------------------------------------------------------------/
+Get /api/recipes/:id/
+
+{
+"id": 2,
+"title": "something new",
+"source": "something not new",
+"category": "something different"
+}
+
+/-----------------------------------------------------------------------------------------------/
+
+GET /api/recipes/:id/ingredients
+
+[
+{
+"name": "did you wanna know",
+"id": 4
+},
+{
+"name": "1 butter recipe moist cake mix",
+"id": 5
+},
+{
+"name": "4 oz salted butter (softened)",
+"id": 6
+},
+{
+"name": "1 2/3 cup whole milk (divided)",
+"id": 7
+}
+]
+
+/-----------------------------------------------------------------------------------------------/
+
+GET /api/recipes/:id/instructions
+
+[
+{
+"title": "something new",
+"step_number": "2",
+"instructions": "Place on oven sheet funny funny",
+"id": 3
+},
+{
+"title": "something new",
+"step_number": "2",
+"instructions": "Prepare milk mixture by combining a can of sweetened condensed milk, evaporated milk, and 1 c whole milk in a bowl and whisk together to combine and keep cool while cake cools.",
+"id": 4
+},
+{
+"title": "something new",
+"step_number": "3",
+"instructions": "Decorate with sliced strawberries if desired and allow to chill for at least 4 hours before serving",
+"id": 5
+}
+]
 
 /-----------------------------------------------------------------------------------------------/
 
 POST /api/recipes/
 
-Create recipe
-
 {
 title:"cookies",
+category:"desert",
 source:"grandmaw sally",
-ingredients:"oreos",
-instructions:TO BE ANNOUCED LATER,
-category:"desert"
+}
+
+/-----------------------------------------------------------------------------------------------/
+
+POST /api/recipes/:id/ingredients/
+{
+name: "1 cup of flour",
+recipe_id: 1
+}
+
+/-----------------------------------------------------------------------------------------------/
+
+POST /api/recipes/:id/instructions/
+
+{
+recipe_id: 1,
+step_number: 1,
+instructions: "Mix all ingredients in bowl",
 }
 
 /-----------------------------------------------------------------------------------------------/
 
 PUT /api/recipes/:id
-Update recipe
-Must include id
 
 {
 title:"cookies",
+category:"desert",
 source:"grandmaw sally",
-ingredients:"oreos",
-instructions:TO BE ANNOUCED LATER,
-category:"desert"
+}
+
+PUT /api/recipes/ingredients/:ingredientid
+
+{
+name: "1 cup of flour",
+recipe_id: 1
+}
+
+PUT /api/recipes/instructions/:instructionid
+g
+{
+recipe_id: 1,
+step_number: 1,
+instructions: "Mix all ingredients in bowl",
 }
 
 /-----------------------------------------------------------------------------------------------/
