@@ -3,13 +3,14 @@ const router = require("express").Router();
 const recipes = require("./recipes-model");
 
 router.get("/", (req, res) => {
-    recipes.find()
+    recipes
+        .find()
         .then((recipe) => {
             res.status(200).json(recipe);
         })
         .catch((error) => {
             res.status(401).json({ message: "couldn't retrieve recipes" });
-        })
+        });
 });
 
 router.get("/:id", (req, res) => {
@@ -174,7 +175,7 @@ router.put("/:id", (req, res) => {
                 res.json({ update: count });
             } else {
                 res.status(404).json({
-                    message: "Could not find user with given id",
+                    message: "Could not find recipe with given id",
                 });
             }
         })
@@ -182,7 +183,7 @@ router.put("/:id", (req, res) => {
             res.status(500).json({ message: "Failed to update recipe" });
         });
 });
-router.put("/:id/ingredients", (req, res) => {
+router.put("/ingredients/:id", (req, res) => {
     const { id } = req.params;
     const changes = req.body;
 
@@ -198,11 +199,11 @@ router.put("/:id/ingredients", (req, res) => {
             }
         })
         .catch((err) => {
-            res.status(500).json({ message: "Failed to update recipe" });
+            res.status(500).json({ message: "Failed to update ingredients" });
         });
 });
 
-router.put("/:id/instructions", (req, res) => {
+router.put("/instructions/:id", (req, res) => {
     const { id } = req.params;
     const changes = req.body;
 
@@ -218,7 +219,7 @@ router.put("/:id/instructions", (req, res) => {
             }
         })
         .catch((err) => {
-            res.status(500).json({ message: "Failed to update recipe" });
+            res.status(500).json({ message: "Failed to update instructions" });
         });
 });
 

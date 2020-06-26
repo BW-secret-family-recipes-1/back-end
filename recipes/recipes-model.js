@@ -5,9 +5,7 @@ function find() {
 }
 
 function findUserById(id) {
-    return db("users")
-        .where({ id })
-        .select("id", "email");
+    return db("users").where({ id }).select("id", "email");
 }
 
 function findById(id) {
@@ -19,14 +17,14 @@ function findById(id) {
 function findIngredients(id) {
     return db("ingredients as in")
         .join("recipes as r", "r.id", "=", "in.recipe_id")
-        .select("in.name")
+        .select("in.name", "in.id")
         .where({ recipe_id: id });
 }
 
 function findInstructions(id) {
     return db("instructions as i")
         .join("recipes as r", "r.id", "=", "i.recipe_id")
-        .select("r.title", "i.step_number", "i.instructions")
+        .select("r.title", "i.step_number", "i.instructions", "i.id")
         .where({ recipe_id: id });
 }
 
